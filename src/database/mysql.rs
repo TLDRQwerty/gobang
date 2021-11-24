@@ -7,6 +7,7 @@ use database_tree::{Child, Database, Table};
 use futures::TryStreamExt;
 use sqlx::mysql::{MySqlColumn, MySqlPoolOptions, MySqlRow};
 use sqlx::{Column as _, Row as _, TypeInfo as _};
+use uuid::Uuid;
 use std::time::Duration;
 
 pub struct MySqlPool {
@@ -453,10 +454,13 @@ fn convert_column_value_to_string(row: &MySqlRow, column: &MySqlColumn) -> anyho
     } else if let Ok(value) = row.try_get(column_name) {
         let value: Option<serde_json::Value> = value;
         Ok(get_or_null!(value))
-    } else if let Ok(value) = row.try_get(column_name) {
+    }  else if let Ok(value) = row.try_get(column_name) {
         let value: Option<bool> = value;
         Ok(get_or_null!(value))
-    } else {
+    } else if let Ok(value) = row.try_get(column_name) {
+        let value: Option<Vec<u8>> = value;
+        Ok(get_or_null!(Uuid::from_bytes(&value.unwrap())))
+     } else {
         anyhow::bail!(
             "column type not implemented: `{}` {}",
             column_name,

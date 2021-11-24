@@ -621,6 +621,7 @@ dependencies = [
  "tui",
  "unicode-segmentation",
  "unicode-width",
+ "uuid",
  "which",
 ]
 
@@ -1878,6 +1879,12 @@ dependencies = [
  "matches",
  "percent-encoding",
 ]
+
+[[package]]
+name = "uuid"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "885acc3b17fdef6230d1f7765dff1106dfd5e75a93c2f26459fbf600ed6dcc14"
 
 [[package]]
 name = "vcpkg"
